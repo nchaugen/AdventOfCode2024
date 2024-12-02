@@ -1,7 +1,7 @@
-import Day1.similarityScoreFor
-import Day1.totalDistanceFor
-import org.assertj.core.api.Assertions.assertThat
+import Day1.similarityScore
+import Day1.totalDistance
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 object Day1Test {
 
@@ -20,14 +20,14 @@ object Day1Test {
 
     @Test
     fun shouldFindTotalDistance() {
-        assertThat(totalDistanceFor(sample)).isEqualTo(11)
-        assertThat(totalDistanceFor(input)).isEqualTo(2970687)
+        assertEquals(11, totalDistance(sample))
+        assertEquals(2970687, totalDistance(input))
     }
 
     @Test
     fun shouldFindSimilarityScore() {
-        assertThat(similarityScoreFor(sample)).isEqualTo(31)
-        assertThat(similarityScoreFor(input)).isEqualTo(23963899)
+        assertEquals(31, similarityScore(sample))
+        assertEquals(23963899, similarityScore(input))
     }
 
 }

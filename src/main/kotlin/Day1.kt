@@ -1,14 +1,14 @@
 import kotlin.math.abs
 
 object Day1 {
-    fun totalDistanceFor(input: List<String>) =
+    fun totalDistance(input: List<String>) =
         parse(input).let { (left, right) ->
             left.sorted()
                 .zip(right.sorted())
                 .sumOf { (left, right) -> abs(left - right) }
         }
 
-    fun similarityScoreFor(input: List<String>) =
+    fun similarityScore(input: List<String>) =
         parse(input).let { (left, right) ->
             left.sumOf { number -> number * right.count { it == number } }
         }
