@@ -1,4 +1,5 @@
 import kotlin.collections.all
+import kotlin.collections.slice
 import kotlin.math.abs
 
 object Day2 {
@@ -9,7 +10,9 @@ object Day2 {
         parse(input).count { it.isSafeWithDampener() }
 
     fun parse(input: List<String>) =
-        input.map { it.split(Regex("\\s+")).map { it.toInt() } }
+        input.map { it.split(whitespace).map { it.toInt() } }
+
+    private val whitespace = Regex("\\s+")
 }
 
 private fun List<Int>.isSafe() =
@@ -17,4 +20,4 @@ private fun List<Int>.isSafe() =
         .let { diffs -> diffs.all { abs(it) < 4 } && (diffs.all { it < 0 } || diffs.all { it > 0 }) }
 
 private fun List<Int>.isSafeWithDampener() =
-    this.indices.any { i -> (this.subList(0, i) + this.subList(i + 1, this.size)).isSafe() }
+    this.indices.any { slice((0..<size) - it).isSafe() }
