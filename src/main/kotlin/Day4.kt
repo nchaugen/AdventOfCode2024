@@ -20,15 +20,13 @@ object Day4 {
     private fun String.count(word: String): Int = this.split(word).count() - 1
 
     fun countXmas(input: List<String>): Int =
-        input.dropLast(2).mapIndexed { y, line ->
-            line.dropLast(2).indices.count { x -> input.containsXmasAt(y, x) }
-        }.sum()
-
-    private fun List<String>.containsXmasAt(y: Int, x: Int): Boolean =
-        windowAt(y, x).let { window ->
-            (diagonal(window) + reverseDiagonal(window)).sumOf { it.countBothWays("MAS") } > 1
+        input.first().drop(2).indices.let { xRange ->
+            input.windowed(3).sumOf { xRange.count { x -> it.containsXmasAt(x) } }
         }
 
-    private fun List<String>.windowAt(y: Int, x: Int): List<String> =
-        this.slice(y..y + 2).map { it.substring(x..x + 2) }
+    private fun List<String>.containsXmasAt(x: Int): Boolean =
+        this.joinToString("") { it.substring(x..x + 2) }
+            .filterIndexed { index, _ -> index % 2 == 0 }
+            .let { listOf("MMASS", "MSAMS", "SSAMM", "SMASM").contains(it) }
+
 }
