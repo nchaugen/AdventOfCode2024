@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 object Day4Test {
 
-    private val sample: List<String> = """
+    private val sample: List<String> = Input.fromText("""
         MMMSXXMASM
         MSAMXMSMSA
         AMXSXMAAMM
@@ -19,10 +19,10 @@ object Day4Test {
         SAXAMASAAA
         MAMMMXMMMM
         MXMXAXMASX
-    """.trimIndent().split("\n")
+    """)
 
     private val input: List<String> by lazy {
-        Input.linesFrom("day4-input.txt")
+        Input.fromFile("day4-input.txt")
     }
 
     @Test
@@ -39,39 +39,40 @@ object Day4Test {
 
     @Test
     fun shouldCreatedHorizontal() {
-        val input: List<String> = """
+        val input = Input.fromText("""
             012345
             012345
             012345
             012345
             012345
             012345
-        """.trimIndent().split("\n")
+        """)
 
-        val expected = """
+        val expected = Input.fromText("""
             000000
             111111
             222222
             333333
             444444
             555555
-        """.trimIndent().split("\n")
+        """)
 
         assertEquals(expected, horizontal(input))
     }
 
+
     @Test
     fun shouldCreateDiagonal() {
-        val input: List<String> = """
+        val input = Input.fromText("""
             012345
             123456
             234567
             345678
             456789
             567890
-        """.trimIndent().split("\n")
+        """)
 
-        val expected = """
+        val expected = Input.fromText("""
             0.....
             11....
             222...
@@ -83,23 +84,23 @@ object Day4Test {
             ...888
             ....99
             .....0
-        """.trimIndent().split("\n")
+        """)
 
         assertEquals(expected, diagonal(input))
     }
 
     @Test
     fun shouldCreateReverseDiagonal() {
-        val input: List<String> = """
+        val input = Input.fromText("""
             543210
             654321
             765432
             876543
             987654
             098765
-        """.trimIndent().split("\n")
+        """)
 
-        val expected = """
+        val expected = Input.fromText("""
             .....0
             ....99
             ...888
@@ -111,8 +112,7 @@ object Day4Test {
             222...
             11....
             0.....
-        """.trimIndent().split("\n")
-
+        """)
 
         assertEquals(expected, reverseDiagonal(input))
     }

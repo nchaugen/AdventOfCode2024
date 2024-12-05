@@ -5,17 +5,17 @@ import kotlin.test.assertEquals
 
 object Day1Test {
 
-    private val sample: List<String> = """
+    private val sample: List<String> = Input.fromText("""
         3   4
         4   3
         2   5
         1   3
         3   9
         3   3
-    """.trimIndent().split("\n")
+    """)
 
     private val input: List<String> by lazy {
-        Input.linesFrom("day1-input.txt")
+        Input.fromFile("day1-input.txt")
     }
 
     @Test

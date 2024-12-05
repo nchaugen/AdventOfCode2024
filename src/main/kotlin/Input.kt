@@ -1,4 +1,6 @@
 object Input {
-    fun linesFrom(filename: String) =
+    fun fromFile(filename: String) =
         object {}.javaClass.getResourceAsStream(filename)?.bufferedReader()?.readLines() ?: emptyList()
+
+    fun fromText(text: String): List<String> = text.trimIndent().split("\n")
 }
