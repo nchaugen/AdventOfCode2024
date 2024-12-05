@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 object Day4Test {
 
-    private val sample: List<String> = Input.fromText("""
+    private val sample: Input = inputFromText("""
         MMMSXXMASM
         MSAMXMSMSA
         AMXSXMAAMM
@@ -21,8 +21,8 @@ object Day4Test {
         MXMXAXMASX
     """)
 
-    private val input: List<String> by lazy {
-        Input.fromFile("day4-input.txt")
+    private val input: Input by lazy {
+        inputFromFile("day4-input.txt")
     }
 
     @Test
@@ -39,7 +39,7 @@ object Day4Test {
 
     @Test
     fun shouldCreatedHorizontal() {
-        val input = Input.fromText("""
+        val input = inputFromText("""
             012345
             012345
             012345
@@ -48,7 +48,7 @@ object Day4Test {
             012345
         """)
 
-        val expected = Input.fromText("""
+        val expected = inputFromText("""
             000000
             111111
             222222
@@ -63,7 +63,7 @@ object Day4Test {
 
     @Test
     fun shouldCreateDiagonal() {
-        val input = Input.fromText("""
+        val input = inputFromText("""
             012345
             123456
             234567
@@ -72,7 +72,7 @@ object Day4Test {
             567890
         """)
 
-        val expected = Input.fromText("""
+        val expected = inputFromText("""
             0.....
             11....
             222...
@@ -91,7 +91,7 @@ object Day4Test {
 
     @Test
     fun shouldCreateReverseDiagonal() {
-        val input = Input.fromText("""
+        val input = inputFromText("""
             543210
             654321
             765432
@@ -100,7 +100,7 @@ object Day4Test {
             098765
         """)
 
-        val expected = Input.fromText("""
+        val expected = inputFromText("""
             .....0
             ....99
             ...888

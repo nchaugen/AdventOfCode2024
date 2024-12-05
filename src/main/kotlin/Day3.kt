@@ -1,6 +1,6 @@
 object Day3 {
 
-    fun sumOfMul(input: List<String>): Long =
+    fun sumOfMul(input: Input): Long =
         input.flatMap {
             MUL.findAll(it).map { match ->
                 match.groupValues.drop(1)
@@ -9,12 +9,12 @@ object Day3 {
             }
         }.sum()
 
-    fun sumOfEnabledMul(input: List<String>): Long =
+    fun sumOfEnabledMul(input: Input): Long =
         sumOfMul(
             enabledMul(emptyList(), input.joinToString())
         )
 
-    fun enabledMul(enabled: List<String>, remaining: String): List<String> =
+    fun enabledMul(enabled: Input, remaining: String): Input =
         if (remaining.contains(DONT))
             enabledMul(
                 enabled = enabled + remaining.substringBefore(DONT),

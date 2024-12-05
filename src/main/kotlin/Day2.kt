@@ -3,13 +3,13 @@ import kotlin.collections.slice
 import kotlin.math.abs
 
 object Day2 {
-    fun countSafeReports(input: List<String>): Int =
+    fun countSafeReports(input: Input): Int =
         parse(input).count { it.isSafe() }
 
-    fun countSafeReportsWithDampener(input: List<String>): Int =
+    fun countSafeReportsWithDampener(input: Input): Int =
         parse(input).count { it.isSafeWithDampener() }
 
-    fun parse(input: List<String>): List<List<Int>> =
+    fun parse(input: Input): List<List<Int>> =
         input.map { it.split(whitespace).map { it.toInt() } }
 
     private val whitespace = Regex("""\s+""")

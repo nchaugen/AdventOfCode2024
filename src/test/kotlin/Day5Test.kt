@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 object Day5Test {
 
-    private val sample: List<String> = Input.fromText("""
+    private val sample: Input = inputFromText("""
         47|53
         97|13
         97|61
@@ -36,8 +36,8 @@ object Day5Test {
         97,13,75,29,47
     """)
 
-    private val input: List<String> by lazy {
-        Input.fromFile("day5-input.txt")
+    private val input: Input by lazy {
+        inputFromFile("day5-input.txt")
     }
 
     @Test
