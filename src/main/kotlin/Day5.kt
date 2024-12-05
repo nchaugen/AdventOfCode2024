@@ -6,27 +6,29 @@ object Day5 {
         parse(input).let { (rules, updates) ->
             updates
                 .filter { rules.isCorrect(it) }
-                .sumOf { it[it.size / 2] }
+                .sumOf(::middlePage)
         }
 
     fun sumOfIncorrectRules(input: Input): Int =
         parse(input).let { (rules, updates) ->
             updates
                 .filterNot { rules.isCorrect(it) }
-                .map { it.sortedWith { a, b -> rules.compare(a, b) } }
-                .sumOf { it[it.size / 2] }
+                .map { rules.correct(it) }
+                .sumOf(::middlePage)
         }
 
-    private fun Rules.compare(a: Int, b: Int): Int =
-        if (a in this.mustBeAfter(b)) 1 else -1
+    private fun middlePage(update: Pages): Int = update[update.size / 2]
 
-    private fun Rules.isCorrect(update: List<Int>): Boolean =
+    private fun Rules.isCorrect(update: Pages): Boolean =
         update.foldIndexed(true) { i, valid, page ->
-            valid && update.slice(0..i).none { before -> before in this.mustBeAfter(page) }
+            valid && update.slice(0 until i).none { before -> before in mustBeAfter(page) }
         }
 
-    private fun Rules.mustBeAfter(page: Int): List<Int> =
-        this.getOrDefault(page, emptyList())
+    private fun Rules.correct(update: Pages): Pages =
+        update.sortedWith { a, b -> if (a in mustBeAfter(b)) 1 else -1 }
+
+    private fun Rules.mustBeAfter(page: Int): Pages =
+        getOrDefault(page, emptyList())
 
     private fun parse(input: Input): Pair<Rules, Updates> =
         parseRules(input.beforeBlank()) to parseUpdates(input.afterBlank())
@@ -40,5 +42,6 @@ object Day5 {
 
 }
 
-private typealias Updates = List<List<Int>>
-private typealias Rules = Map<Int, List<Int>>
+private typealias Pages = List<Int>
+private typealias Updates = List<Pages>
+private typealias Rules = Map<Int, Pages>
