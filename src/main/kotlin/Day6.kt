@@ -136,11 +136,3 @@ object Day6 {
             }
     }
 }
-
-private typealias Position = Pair<Int, Int>
-
-private val Position.x: Int
-    get() = this.first
-
-private val Position.y: Int
-    get() = this.second
