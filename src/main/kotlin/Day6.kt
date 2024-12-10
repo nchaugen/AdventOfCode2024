@@ -68,19 +68,23 @@ object Day6 {
             }
 
         private fun nextStopNorth(guard: Guard, obstructions: Obstructions): Position =
-            obstructions.nextFacingNorth(guard.position)?.let { it.x to it.y + 1 }
+            obstructions.nextFacingNorth(guard.position)
+                ?.let { it.x to it.y + 1 }
                 ?: (guard.position.x to min.y)
 
         private fun nextStopSouth(guard: Guard, obstructions: Obstructions): Position =
-            obstructions.nextFacingSouth(guard.position)?.let { it.x to it.y - 1 }
+            obstructions.nextFacingSouth(guard.position)
+                ?.let { it.x to it.y - 1 }
                 ?: (guard.position.x to max.y)
 
         private fun nextStopWest(guard: Guard, obstructions: Obstructions): Position =
-            obstructions.nextFacingWest(guard.position)?.let { it.x + 1 to it.y }
+            obstructions.nextFacingWest(guard.position)
+                ?.let { it.x + 1 to it.y }
                 ?: (min.x to guard.position.y)
 
         private fun nextStopEast(guard: Guard, obstructions: Obstructions): Position =
-            obstructions.nextFacingEast(guard.position)?.let { it.x - 1 to it.y }
+            obstructions.nextFacingEast(guard.position)
+                ?.let { it.x - 1 to it.y }
                 ?: (max.x to guard.position.y)
 
     }
@@ -95,22 +99,26 @@ object Day6 {
 
         fun nextFacingEast(from: Position): Position? =
             positions
-                .filter { it.x > from.x && it.y == from.y }
+                .filter { it.y == from.y }
+                .filter { it.x > from.x }
                 .minByOrNull { it.x }
 
         fun nextFacingWest(from: Position): Position? =
             positions
-                .filter { it.x < from.x && it.y == from.y }
+                .filter { it.y == from.y }
+                .filter { it.x < from.x }
                 .maxByOrNull { it.x }
 
         fun nextFacingSouth(from: Position): Position? =
             positions
-                .filter { it.x == from.x && it.y > from.y }
+                .filter { it.x == from.x }
+                .filter { it.y > from.y }
                 .minByOrNull { it.y }
 
         fun nextFacingNorth(from: Position): Position? =
             positions
-                .filter { it.x == from.x && it.y < from.y }
+                .filter { it.x == from.x }
+                .filter { it.y < from.y }
                 .maxByOrNull { it.y }
 
     }
