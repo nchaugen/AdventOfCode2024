@@ -19,34 +19,34 @@ object Day9 {
         }.first
 
     private fun List<Block>.moveTo(free: Span): List<Block> =
-        this.zip(free.blocks) { fileBlock, freeBlock -> freeBlock.position to fileBlock.fileNumber }
+        zip(free.blocks) { fileBlock, freeBlock -> freeBlock.position to fileBlock.fileNumber }
 
     private fun List<Span>.findIndexOfFit(fileBlocks: List<Block>): Int? =
-        this.indexOfFirst { it.blocks.count() >= fileBlocks.count() && it.blocks.first().position < fileBlocks.first().position }
-            .let { if (it == -1) null else it }
-
+        indexOfFirst {
+            it.blocks.count() >= fileBlocks.count() && it.blocks.first().position < fileBlocks.first().position
+        }.let { if (it == -1) null else it }
 
     private fun List<Span>.dropBlocks(index: Int, count: Int): List<Span> =
-        this.foldIndexed(emptyList<Span>()) { i, acc, span ->
-            if (i == index) acc + (span.id to span.blocks.drop(count))
-            else acc + span
-        }
+        take(index) + this[index].let { it.id to it.blocks.drop(count) } + takeLast(lastIndex - index)
 
     private fun compactBlocks(blocks: List<Block>): List<Block> =
         blocks.gaps().let { gaps ->
             blocks.data().let { data ->
-                data.reversed().zip(gaps)
+                data.reversed()
+                    .zip(gaps)
                     .mapNotNull { (data, gap) ->
-                        if (data.position > gap.position) gap.position to data.fileNumber
-                        else null
-                    }.let { relocated ->
-                        data.dropLast(relocated.count()) + relocated
+                        if (data.position > gap.position) gap.position to data.fileNumber else null
+                    }.let { movedBlocks ->
+                        data.dropLast(movedBlocks.count()) + movedBlocks
                     }
             }
         }
 
     private fun computeChecksum(blocks: List<Block>): Long =
-        blocks.fold(0L) { checksum, block -> if (block.fileNumber >= 0) checksum + (block.position * block.fileNumber) else checksum }
+        blocks.fold(0L) { checksum, block ->
+            if (block.fileNumber >= 0) checksum + (block.position * block.fileNumber)
+            else checksum
+        }
 
     private fun parseSpans(blocks: List<Block>): Pair<List<Span>, List<Span>> =
         blocks.groupBy { block -> block.fileNumber }.let { diskMap ->
@@ -57,9 +57,7 @@ object Day9 {
                     diskMap.filterKeys { fileNumber -> fileNumber < 0 }
                         .entries.sortedByDescending { it.key }
                         .map { it.key to it.value }
-                        .let { freeSpans ->
-                            files to freeSpans
-                        }
+                        .let { freeSpans -> files to freeSpans }
                 }
         }
 
@@ -77,16 +75,16 @@ object Day9 {
 
 private typealias Block = Pair<Int, Int>
 
-val Block.position: Int
+private val Block.position: Int
     get() = this.first
 
-val Block.fileNumber: Int
+private val Block.fileNumber: Int
     get() = this.second
 
 private typealias Span = Pair<Int, List<Block>>
 
-val Span.id: Int
+private val Span.id: Int
     get() = this.first
 
-val Span.blocks: List<Block>
+private val Span.blocks: List<Block>
     get() = this.second
