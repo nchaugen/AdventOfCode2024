@@ -1,20 +1,25 @@
 object Day11 {
 
-    fun countBlinks(input: Input, count: Int): Long =
-        parse(input).blink(count).count()
+    fun countStones(input: Input, blinks: Int): Long =
+        parse(input).blink(blinks).count()
 
     private fun Stones.blink(count: Int): Stones =
         (0 until count).fold(this) { stones, _ -> stones.blink() }
 
     private fun Stones.blink(): Stones =
-        this.flatMap { it ->
+        this.flatMap {
             when {
-                it.key == "0" -> listOf("1" to it.value)
-                it.key.count() % 2 == 0 -> listOf(it.key.firstHalf() to it.value, it.key.secondHalf() to it.value)
-                else -> listOf((it.key.toLong() * 2024).toString() to it.value)
+                it.number == "0" -> listOf("1" to it.count)
+
+                it.number.length % 2 == 0 -> listOf(
+                    it.number.firstHalf() to it.count,
+                    it.number.secondHalf() to it.count
+                )
+
+                else -> listOf((it.number.toLong() * 2024).toString() to it.count)
             }
         }.fold(emptyMap()) { stones, stone ->
-            stones + (stone.first to stones.getOrDefault(stone.first, 0) + stone.second)
+            stones + (stone.number to stones.getOrDefault(stone.number, 0) + stone.count)
         }
 
     private fun Stones.count(): Long =
@@ -33,3 +38,19 @@ object Day11 {
 }
 
 private typealias Stones = Map<String, Long>
+
+private typealias Stone = Map.Entry<String, Long>
+
+private val Stone.number: String
+    get() = this.key
+
+private val Stone.count: Long
+    get() = this.value
+
+private typealias StonePair = Pair<String, Long>
+
+private val StonePair.number: String
+    get() = this.first
+
+private val StonePair.count: Long
+    get() = this.second
