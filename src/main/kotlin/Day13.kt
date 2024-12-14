@@ -4,19 +4,17 @@ object Day13 {
         parse(input, offset).sumOf { it.findSolution()?.let { (a, b) -> 3 * a + b } ?: 0 }
 
     private data class Machine(val a: Delta, val b: Delta, val price: Delta) {
-
         // Cramer's rule
         fun findSolution(): Pair<Long, Long>? =
             (a.x * b.y - b.x * a.y).let { determinant ->
                 if (determinant == 0L) null
-                else ((price.x * b.y - b.x * price.y).toLong() to (a.x * price.y - price.x * a.y).toLong())
+                else ((price.x * b.y - b.x * price.y) to (a.x * price.y - price.x * a.y))
                     .let { (aNumerator, bNumerator) ->
                         if (aNumerator % determinant == 0L && bNumerator % determinant == 0L)
                             (aNumerator / determinant) to (bNumerator / determinant)
                         else null
                     }
             }
-
     }
 
     private fun parse(input: Input, offset: Long): List<Machine> =
@@ -40,8 +38,8 @@ object Day13 {
 
 private typealias Delta = Pair<Long, Long>
 
-val Delta.x: Long
+private val Delta.x: Long
     get() = this.first
 
-val Delta.y: Long
+private val Delta.y: Long
     get() = this.second

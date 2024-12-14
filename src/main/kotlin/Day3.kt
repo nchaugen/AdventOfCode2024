@@ -26,5 +26,4 @@ object Day3 {
     private const val DONT = "don't()"
     private const val DO = "do()"
 
-    private fun List<Long>.product(): Long = this.reduce { a, b -> a * b }
 }
