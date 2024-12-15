@@ -4,5 +4,5 @@ fun inputFromFile(filename: String): Input =
 fun inputFromText(text: String): Input = text.trimIndent().split("\n")
 
 typealias Input = List<String>
-fun Input.beforeBlank(): Input = this.takeWhile { it.isNotBlank() }
-fun Input.afterBlank(): Input = this.takeLastWhile { it.isNotBlank() }
+fun Input.beforeBlankLine(): Input = this.takeWhile { it.isNotBlank() }
+fun Input.afterBlankLine(): Input = this.dropWhile { it.isNotBlank() }.drop(1)

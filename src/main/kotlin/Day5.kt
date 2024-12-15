@@ -31,7 +31,7 @@ object Day5 {
         getOrDefault(page, emptyList())
 
     private fun parse(input: Input): Pair<Rules, Updates> =
-        parseRules(input.beforeBlank()) to parseUpdates(input.afterBlank())
+        parseRules(input.beforeBlankLine()) to parseUpdates(input.afterBlankLine())
 
     private fun parseRules(input: Input): Rules =
         input.map { it.split('|').map { it.toInt() }.let { it.first() to it.last() } }
