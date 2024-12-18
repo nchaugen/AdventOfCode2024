@@ -27,14 +27,35 @@ object Day15Test {
         v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
     """)
 
+    private val sample2: Input = inputFromText("""
+        #######
+        #.....#
+        #.....#
+        #.@O..#
+        #..#O.#
+        #...O.#
+        #..O..#
+        #.....#
+        #######
+        
+        >><vvv>v>^^^
+    """)
+
     private val input: Input by lazy {
         inputFromFile("day15-input.txt")
     }
 
     @Test
     fun shouldCalculateGpsCoordinates() {
-        assertEquals(10092, Day15.sumOfGpsCoordinates(sample))
-        assertEquals(1456590, Day15.sumOfGpsCoordinates(input))
+        assertEquals(10092, Day15.sumOfGpsCoordinates(sample, 1))
+        assertEquals(1456590, Day15.sumOfGpsCoordinates(input, 1))
+    }
+
+    @Test
+    fun shouldCalculateGpsCoordinatesInSecondWarehouse() {
+        assertEquals(9021, Day15.sumOfGpsCoordinates(sample, 2))
+        assertEquals(1430, Day15.sumOfGpsCoordinates(sample2, 2))
+        assertEquals(1489116, Day15.sumOfGpsCoordinates(input, 2)) //too low
     }
 
 }
